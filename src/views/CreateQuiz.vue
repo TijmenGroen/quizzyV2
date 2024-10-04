@@ -1,39 +1,11 @@
 <script setup>
 import {ref} from "vue";
-import {BaseDirectory, createDir, exists, writeTextFile} from "@tauri-apps/api/fs";
-import {open} from "@tauri-apps/api/dialog";
 import router from "../router.js";
-import {invoke} from "@tauri-apps/api/tauri";
 
 const title = ref("");
 const selectedDir = ref(null)
 
-async function selectDir() {
-  selectedDir.value = await open({
-    directory: true,
-    multiple: false
-  });
-}
-
 async function createQuiz() {
-  if(selectedDir.value !== null) {
-  const dirExists = await exists(selectedDir.value)
-    if(!dirExists) {
-    alert("Select an Existing File Directory");
-    return;
-    }
-  }
-  else {
-    alert("Select File Directory");
-    return;
-  }
-  if (await exists(selectedDir.value + "/" + title.value, {dir: BaseDirectory.AppData})) {
-    alert("Quiz Already Exists!");
-    return;
-  }
-    await createDir(selectedDir.value + "/" + title.value, {dir: BaseDirectory.AppData});
-  await writeTextFile(selectedDir.value + "/" + title.value + "/name.txt", title.value, {dir: BaseDirectory.AppData});
-  await invoke("create_quiz",)
   await router.push("/quizEditor")
 }
 

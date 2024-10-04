@@ -27,12 +27,12 @@
   },
   "keywords": [],
   "author": {
-    "name": "Tijmen",
-    "email": "tijmen.groen@outlook.com"
+    "name": "DuifKoning"
   },
   "license": "MIT",
   "dependencies": {
     "electron-squirrel-startup": "^1.0.1",
-    "vue": "^3.5.11"
+    "vue": "^3.5.11",
+    "vue-router": "^4.4.5"
   }
 }

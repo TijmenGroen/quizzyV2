@@ -1,12 +1,5 @@
 <script setup>
-import { open } from '@tauri-apps/api/dialog';
 
-async function openFileExplorer() {
-  const selectedDir = await open({
-    directory: true,
-    multiple: false
-  })
-}
 </script>
 
 <template>
@@ -14,7 +7,7 @@ async function openFileExplorer() {
     <h1>Quizzy</h1>
     <div class="button-panel">
       <RouterLink class="router-link" to="/createQuiz">Maak Quiz</RouterLink>
-      <a class="router-link" v-on:click=openFileExplorer>Bewerk Quiz</a>
+      <a class="router-link">Bewerk Quiz</a>
       <RouterLink class="router-link" to="/">Laad Quiz</RouterLink>
     </div>
   </div>
