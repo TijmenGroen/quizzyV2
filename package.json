@@ -1,8 +1,8 @@
 {
-  "name": "electron-test-1",
-  "productName": "electron-test-1",
+  "name": "quizzyV2",
+  "productName": "quizzyV2",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Make easy pubquizzes",
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "electron-forge start",

@@ -1,12 +1,20 @@
-<script setup>
-console.log('👋 This message is being logged by "App.vue", included via Vite');
-</script>
-
 <template>
-  <h1>💖 Hello World!</h1>
-  <p>Welcome to your Electron own application.</p>
+  <RouterView/>
 </template>
 
-<style scoped>
+<script>
+import HomePage from './views/Home.vue'
 
+export default {
+  name: 'App',
+  components: {
+    HomePage,
+  }
+}
+</script>
+
+<style>
+body {
+  font-family: "JetBrains Mono", monospace;
+}
 </style>
