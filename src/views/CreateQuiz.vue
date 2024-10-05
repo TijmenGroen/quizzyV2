@@ -1,7 +1,6 @@
 <script setup>
 import {ref} from "vue";
 import router from "../router.js";
-import {openFileAPI} from "../renderer";
 
 const title = ref("");
 const selectedDir = ref(null)
@@ -11,7 +10,7 @@ async function createQuiz() {
 }
 
 async function openFile() {
-  selectedDir.value = await openFileAPI();
+  selectedDir.value = await window.electronAPI.openFile();
 }
 
 </script>
