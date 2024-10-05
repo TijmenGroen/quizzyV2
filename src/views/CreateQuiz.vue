@@ -6,11 +6,24 @@ const title = ref("");
 const selectedDir = ref(null)
 
 async function createQuiz() {
+  if (!selectedDir.value) {
+    await window.electronAPI.showMessageBox("Select folder first");
+    return;
+  }
+  else if (!await window.electronAPI.exists(selectedDir.value)) {
+    await window.electronAPI.showMessageBox("Folder not found");
+    return;
+  }
+  await writeFile();
   await router.push("/quizEditor")
 }
 
 async function openFile() {
   selectedDir.value = await window.electronAPI.openFile();
+}
+
+async function writeFile() {
+ await window.electronAPI.writeFile(selectedDir.value, title.value + ".txt", title.value);
 }
 
 </script>

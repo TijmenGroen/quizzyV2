@@ -1,6 +1,6 @@
 import { dialog } from "electron"
 
-export async function handleFileOpen () {
+export async function handleDirectoryOpen () {
     const { canceled, filePaths } = await dialog.showOpenDialog({
         properties: ['openDirectory'],
     })

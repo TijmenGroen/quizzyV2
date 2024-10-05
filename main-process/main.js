@@ -1,6 +1,10 @@
+import {handleExists} from "./fs/existsHandler";
+
 const { app, BrowserWindow, ipcMain} = require('electron');
 const path = require('node:path');
-import {handleFileOpen} from "./fs/openFileHandler";
+import {handleDirectoryOpen} from "./dialog/openDirectoryHandler";
+import {handleShowMessageBox} from "./dialog/showMessageBoxHandler";
+import {handleWriteFile} from "./fs/writeFileHandler";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -37,7 +41,16 @@ const createWindow = () => {
 app.whenReady().then(() => {
   createWindow();
 
-  ipcMain.handle('dialog:openFile', (handleFileOpen));
+  ipcMain.handle('dialog:openDirectory', (handleDirectoryOpen));
+  ipcMain.handle('dialog:showMessageBox', async (event, message) => {
+    await handleShowMessageBox(message)
+  });
+  ipcMain.handle("fs:exists", async (event, path) => {
+    return handleExists(path)
+  })
+  ipcMain.handle("fs:writeFile", async (event, path2, file, data) => {
+    await handleWriteFile(path2, file, data);
+  })
 
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
