@@ -1,12 +1,17 @@
 <script setup>
 import {ref} from "vue";
 import router from "../router.js";
+import {openFileAPI} from "../renderer";
 
 const title = ref("");
 const selectedDir = ref(null)
 
 async function createQuiz() {
   await router.push("/quizEditor")
+}
+
+async function openFile() {
+  selectedDir.value = await openFileAPI();
 }
 
 </script>
@@ -18,7 +23,7 @@ async function createQuiz() {
     <div style="width:100%; display: flex; flex-direction: column; justify-content: center; gap: 4px">
       <div style="width:100%; display: flex; justify-content: center; gap: 4px">
       <button class="button" v-on:click="createQuiz">Create Quiz</button>
-      <button class="button" v-on:click="selectDir">Select Folder</button>
+      <button class="button" v-on:click="openFile">Select Folder</button>
       </div>
     <div style="color: white; display: flex; justify-content: center;">
     Selected Directory: {{ selectedDir }}
