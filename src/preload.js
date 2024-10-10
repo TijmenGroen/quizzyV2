@@ -6,4 +6,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     exists: (path) => ipcRenderer.invoke('fs:exists', path),
     writeFile: (path, file, data) => ipcRenderer.invoke('fs:writeFile', path, file, data),
     mkDir: (path, title) => ipcRenderer.invoke('fs:mkDir', path, title),
+    readFile: (path, file) => ipcRenderer.invoke("fs:readFile", path, file),
+    readDataFile: (path) => ipcRenderer.invoke("fs:readDataFile", path),
 })

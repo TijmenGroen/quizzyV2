@@ -6,9 +6,9 @@
   <div class="home-container">
     <h1>Quizzy</h1>
     <div class="button-panel">
-      <RouterLink class="router-link" to="/createQuiz">Maak Quiz</RouterLink>
-      <a class="router-link">Bewerk Quiz</a>
-      <RouterLink class="router-link" to="/">Laad Quiz</RouterLink>
+      <RouterLink class="router-link" to="/createQuiz">Create Quiz</RouterLink>
+      <RouterLink class="router-link" to="/quizEditor">Edit Quiz</RouterLink>
+      <RouterLink class="router-link" to="/">Play Quiz</RouterLink>
     </div>
   </div>
 </template>

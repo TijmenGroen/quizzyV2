@@ -6,6 +6,7 @@ import {handleDirectoryOpen} from "./dialog/openDirectoryHandler";
 import {handleShowMessageBox} from "./dialog/showMessageBoxHandler";
 import {handleWriteFile} from "./fs/writeFileHandler";
 import {handeMkDir} from "./fs/mkDirHandler";
+import {handleReadFile, handleReadDataFile} from "./fs/readFileHandler";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -54,6 +55,12 @@ app.whenReady().then(() => {
   })
   ipcMain.handle("fs:mkDir", async (event, path3, title) => {
     await handeMkDir(path3, title);
+  })
+  ipcMain.handle("fs:readFile", async (event, path4, file) => {
+    return handleReadFile(path4, file);
+  })
+  ipcMain.handle("fs:readDataFile", async (event, path4) => {
+    return handleReadDataFile(path4);
   })
 
   // On OS X it's common to re-create a window in the app when the
