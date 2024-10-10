@@ -2,33 +2,22 @@
 
 import QuestionOverview from "../components/questionOverview.vue";
 
-const questions = [
-  {
-    id: 1,
-    name: "question1",
-    type: "multipleChoices",
-    choices: ["A", "B", "C"],
-    correctChoice: "A"
-  },
-  {
-    id: 2,
-    name: "question2",
-    type: "multipleChoices",
-    choices: ["A", "B", "C"],
-    correctChoice: "B"
-  },
-  {
-    id: 3,
-    name: "question3",
-    type: "openQuestion",
-    correctAnswer: "answer"
-  }
-]
+const questions = []
+
+function loadQuiz() {
+  window.electronAPI.openDire
+}
+
+function addQuestion(question) {
+  questions.push(question);
+}
+
 </script>
 
 <template>
   <div class="editor-container">
     <question-overview :questions=questions />
+  <button v-on:click="addQuestion">+</button>
   </div>
 </template>
 

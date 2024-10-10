@@ -14,16 +14,17 @@ async function createQuiz() {
     await window.electronAPI.showMessageBox("Folder not found");
     return;
   }
-  await writeFile();
+  await writeDirectory();
   await router.push("/quizEditor")
 }
 
-async function openFile() {
-  selectedDir.value = await window.electronAPI.openFile();
+async function openDirectory() {
+  selectedDir.value = await window.electronAPI.openDirectory();
 }
 
-async function writeFile() {
- await window.electronAPI.writeFile(selectedDir.value, title.value + ".txt", title.value);
+async function writeDirectory() {
+  await window.electronAPI.mkDir(selectedDir.value, title.value);
+  await window.electronAPI.writeFile(selectedDir.value + "/" + title.value, "data.json", title.value);
 }
 
 </script>
@@ -35,7 +36,7 @@ async function writeFile() {
     <div style="width:100%; display: flex; flex-direction: column; justify-content: center; gap: 4px">
       <div style="width:100%; display: flex; justify-content: center; gap: 4px">
       <button class="button" v-on:click="createQuiz">Create Quiz</button>
-      <button class="button" v-on:click="openFile">Select Folder</button>
+      <button class="button" v-on:click="openDirectory">Select Folder</button>
       </div>
     <div style="color: white; display: flex; justify-content: center;">
     Selected Directory: {{ selectedDir }}

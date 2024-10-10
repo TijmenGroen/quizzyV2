@@ -5,6 +5,7 @@ const path = require('node:path');
 import {handleDirectoryOpen} from "./dialog/openDirectoryHandler";
 import {handleShowMessageBox} from "./dialog/showMessageBoxHandler";
 import {handleWriteFile} from "./fs/writeFileHandler";
+import {handeMkDir} from "./fs/mkDirHandler";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -50,6 +51,9 @@ app.whenReady().then(() => {
   })
   ipcMain.handle("fs:writeFile", async (event, path2, file, data) => {
     await handleWriteFile(path2, file, data);
+  })
+  ipcMain.handle("fs:mkDir", async (event, path3, title) => {
+    await handeMkDir(path3, title);
   })
 
   // On OS X it's common to re-create a window in the app when the
