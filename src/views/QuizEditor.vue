@@ -7,6 +7,11 @@ const quizActive = ref(false)
 const optionsBoxOpen = ref(false)
 
 const quizData = ref({});
+const activeQuestion = ref(null);
+
+function setActive(index) {
+  activeQuestion.value = index;
+}
 
 async function loadQuiz() {
   currentQuizDir.value = await window.electronAPI.openDirectory();
@@ -15,7 +20,16 @@ async function loadQuiz() {
 }
 
 function addQuestion(questionType) {
-  quizData.value.questions.push("question")
+  switch (questionType) {
+    case questionType = "finale":
+      quizData.value.questions.push({
+        "name": "New Question",
+        "type": "Finale",
+        "answers": [],
+        "correctAnswer": ""
+      })
+  }
+
   optionsBoxOpen.value = false
 }
 
@@ -41,9 +55,21 @@ onMounted(() => {
     </div>
   <div class="editor-container">
     <div v-if="quizActive" class="quiz-active">
-      <h1>{{ quizData.title }}</h1>
+      <div style="display: flex; flex-direction: column">
         <button v-on:click="openOptionsBox" class="add-button">Add Question</button>
-        <question-overview :questions=quizData.questions />
+        <question-overview :questions=quizData.questions :set-active="setActive" :active-question="activeQuestion"/>
+      </div>
+      <div class="editor-canvas">
+        <div>
+      <h1>{{ quizData.title }}</h1>
+      <h3>{{ currentQuizDir }}</h3>
+        </div>
+        <div class="editor-inputs">
+          <div class="inputs">Question:
+          <input>
+          </div>
+        </div>
+      </div>
     </div>
     <div v-else>
       Wait for directory to open
@@ -98,10 +124,22 @@ h1 {
 .quiz-active {
   display: flex;
   height: 100%;
+}
+
+.editor-canvas {
+  display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.editor-inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .add-button {
-  width: 20%;
+  width: 100%;
 }
 </style>

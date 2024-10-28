@@ -1,14 +1,21 @@
 <script setup>
+
 const props = defineProps({
   questions: Array,
+  setActive: Function,
+  activeQuestion: Number,
 })
+
 </script>
 
 <template>
   <div class="question-overview">
     <div class="question-overview-header">Questions</div>
     <div class="question-overview-content">
-      <div v-for="question in questions" :key="question.id">
+      <div v-for="(question, index) in questions" :key="question.id"
+           :class="{ 'active': activeQuestion === index }"
+           @click="() => { props.setActive(index); }"
+      >
         {{ question.name }} - {{ question.type }}
       </div>
     </div>
@@ -23,10 +30,10 @@ const props = defineProps({
   align-items: center;
   gap: 32px;
   height: 100%;
-  width: 20%;
   min-width: min-content;
   background-color: #1B1E74;
   overflow: auto;
+  filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.5));
 }
 
 .question-overview-header {
@@ -47,8 +54,15 @@ const props = defineProps({
 }
 
 .question-overview-content > * {
-  border: 2px solid white;
+  border: 1px solid white;
+  border-radius: 4px;
   padding: 4px;
-  background-color: darkgray;
+  background-color: #8f00ff;
+  filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.5));
+  cursor: pointer;
+}
+
+.question-overview-content .active {
+  border-color: red !important;
 }
 </style>
