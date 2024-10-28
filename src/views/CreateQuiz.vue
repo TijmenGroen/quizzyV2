@@ -24,7 +24,12 @@ async function openDirectory() {
 
 async function writeDirectory() {
   await window.electronAPI.mkDir(selectedDir.value, title.value);
-  await window.electronAPI.writeFile(selectedDir.value + "/" + title.value, "data.json", title.value);
+  await window.electronAPI.writeFile(selectedDir.value + "/" + title.value, "data.json",
+      {
+        "title": title.value,
+        "questions": []
+      }
+  );
 }
 
 </script>

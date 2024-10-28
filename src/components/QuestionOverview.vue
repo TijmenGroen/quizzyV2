@@ -22,7 +22,7 @@ const props = defineProps({
   justify-content: flex-start;
   align-items: center;
   gap: 32px;
-  height: 100vh;
+  height: 100%;
   width: 20%;
   min-width: min-content;
   background-color: #1B1E74;
