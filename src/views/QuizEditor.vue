@@ -1,6 +1,6 @@
 <script setup>
 import {onMounted, ref} from "vue";
-import QuestionOverview from "../components/QuestionOverview.vue";
+import QuestionOverview from "../components/edit/QuestionOverview.vue";
 import FinaleEditor from "../components/edit/FinaleEditor.vue";
 
 const currentQuizDir = ref(null)
