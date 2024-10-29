@@ -15,6 +15,6 @@ export default {
 
 <style>
 body {
-  font-family: "JetBrains Mono", monospace;
+  font-family: Calibri,serif;
 }
 </style>

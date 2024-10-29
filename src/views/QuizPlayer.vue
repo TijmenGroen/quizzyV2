@@ -133,17 +133,48 @@ onMounted(() => {
 }
 
 .quiz-active {
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .quiz-started {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 64px;
 }
+
+.scores {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+  background-color: #1B1E74;
+  padding-block: 6px;
+  color: white;
+  font-size: x-large;
+}
+
 .active {
   color: red;
+}
+
+button {
+  border: 1px white solid;
+  border-radius: 4px;
+  background-color: #1B1E74;
+  padding: 8px;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+}
+button:hover {
+  background-color: #070a60;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
 }
 </style>
