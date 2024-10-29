@@ -2,6 +2,7 @@ import {handleExists} from "./fs/existsHandler";
 
 const { app, BrowserWindow, ipcMain} = require('electron');
 const path = require('node:path');
+import started from 'electron-squirrel-startup';
 import {handleDirectoryOpen} from "./dialog/openDirectoryHandler";
 import {handleShowMessageBox} from "./dialog/showMessageBoxHandler";
 import {handleWriteFile} from "./fs/writeFileHandler";
@@ -9,13 +10,14 @@ import {handeMkDir} from "./fs/mkDirHandler";
 import {handleReadFile, handleReadDataFile} from "./fs/readFileHandler";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) {
+if (started) {
   app.quit();
 }
 
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
+    autoHideMenuBar: true,
     width: 1200,
     height: 900,
     icon: path.join(__dirname, "assets/img/quizzy.ico"),
@@ -23,6 +25,7 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
       contextIsolation: true,
+      devTools: false
     },
   });
 
