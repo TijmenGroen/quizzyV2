@@ -1,9 +1,11 @@
 <script setup>
 
-import {onMounted, ref} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import FinalePlayer from "../components/play/FinalePlayer.vue";
 
 const subtractionPerAnswer = 20
+
+const revealedQuestions = reactive(new Set())
 
 const quizActive = ref(false)
 const quizStarted = ref(false)
@@ -78,6 +80,7 @@ function subtractScore() {
 }
 
 function nextQuestion() {
+  revealedQuestions.clear()
   activeQuestion.value++
 }
 
@@ -106,7 +109,7 @@ onMounted(() => {
             <button v-on:click="stopActivePlayer(index)">Stop</button>
           </div>
         </div>
-        <finale-player :quiz-data="quizData" :active-question="activeQuestion" :subtract-score="subtractScore" />
+        <finale-player :quiz-data="quizData" :active-question="activeQuestion" :subtract-score="subtractScore" :revealed-questions="revealedQuestions" />
         <button v-on:click="nextQuestion">Next Question</button>
       </div>
       <div v-else class="player-select">

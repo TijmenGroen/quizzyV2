@@ -1,16 +1,14 @@
 <script setup>
-import {reactive} from "vue";
 
 const props = defineProps({
   quizData: Object,
   activeQuestion: Number,
-  subtractScore: Function
+  subtractScore: Function,
+  revealedQuestions: Set
 })
 
-const revealedQuestions = reactive(new Set())
-
 function revealQuestion(index) {
-  revealedQuestions.add(index);
+  props.revealedQuestions.add(index);
   props.subtractScore();
 }
 </script>
@@ -19,7 +17,7 @@ function revealQuestion(index) {
   <div class="question">
     <h3>{{ quizData.questions[props.activeQuestion].name }}</h3>
     <div v-for="(answer, index) in quizData.questions[activeQuestion].answers"
-         :class="{ 'revealed': revealedQuestions.has(index) }"
+         :class="{ 'revealed': props.revealedQuestions.has(index) }"
          @click="revealQuestion(index)"
          class="answers">
         {{ answer }}
