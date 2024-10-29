@@ -24,6 +24,19 @@ function updateAnswers() {
 }
 
 watch(
+    () => props.question,
+    (newQuestion) => {
+      // Update each option to reflect the selected question's answers
+      option1.value = newQuestion.answers[0] || "Option 1";
+      option2.value = newQuestion.answers[1] || "Option 2";
+      option3.value = newQuestion.answers[2] || "Option 3";
+      option4.value = newQuestion.answers[3] || "Option 4";
+      option5.value = newQuestion.answers[4] || "Option 5";
+    },
+    { immediate: true } // Run immediately on mount to set the initial state
+);
+
+watch(
     () => props.question.name,
     (newName) => {
       props.updateQuestion({ ...props.question, name: newName });
