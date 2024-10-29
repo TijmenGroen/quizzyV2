@@ -1,13 +1,18 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import QuestionOverview from "../components/QuestionOverview.vue";
+import FinaleEditor from "../components/edit/FinaleEditor.vue";
 
 const currentQuizDir = ref(null)
 const quizActive = ref(false)
 const optionsBoxOpen = ref(false)
 
-const quizData = ref({});
-const activeQuestion = ref(null);
+const quizData = ref({
+  title: "",
+  questions: []
+});
+
+const activeQuestion = ref(0);
 
 function setActive(index) {
   activeQuestion.value = index;
@@ -19,22 +24,44 @@ async function loadQuiz() {
   quizData.value = await window.electronAPI.readDataFile(currentQuizDir.value)
 }
 
-function addQuestion(questionType) {
+async function addQuestion(questionType) {
   switch (questionType) {
     case questionType = "finale":
       quizData.value.questions.push({
         "name": "New Question",
-        "type": "Finale",
+        "type": "finale",
         "answers": [],
         "correctAnswer": ""
       })
   }
-
   optionsBoxOpen.value = false
+  await updateQuiz()
+}
+
+async function updateQuestion(newData) {
+  quizData.value.questions[activeQuestion.value] = newData
+  await updateQuiz()
+}
+
+async function updateQuiz() {
+  const plainQuizData = getPlainData(quizData)
+  await window.electronAPI.writeFile(currentQuizDir.value, "data.json", JSON.stringify(plainQuizData, null, 2));
 }
 
 function openOptionsBox() {
   optionsBoxOpen.value = true
+}
+
+function getPlainData(reactiveQuizData) {
+  return {
+    "title": reactiveQuizData.value.title,
+    "questions": (reactiveQuizData.value.questions ||[]).map(question => ({
+      "name": question.name,
+      "type": question.type,
+      "answers": question.answers,
+      "correctAnswer": question.correctAnswer
+    })),
+  };
 }
 
 onMounted(() => {
@@ -64,11 +91,11 @@ onMounted(() => {
       <h1>{{ quizData.title }}</h1>
       <h3>{{ currentQuizDir }}</h3>
         </div>
-        <div class="editor-inputs">
-          <div class="inputs">Question:
-          <input>
-          </div>
-        </div>
+        <finale-editor
+            v-if="quizData.questions.length > 0 && quizData.questions[activeQuestion]?.type === 'finale'"
+            :question="quizData.questions[activeQuestion]"
+            :update-question="updateQuestion"
+        />
       </div>
     </div>
     <div v-else>
@@ -131,12 +158,6 @@ h1 {
   flex-direction: column;
   align-items: center;
   width: 100%;
-}
-
-.editor-inputs {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .add-button {

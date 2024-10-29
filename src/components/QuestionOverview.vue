@@ -12,11 +12,17 @@ const props = defineProps({
   <div class="question-overview">
     <div class="question-overview-header">Questions</div>
     <div class="question-overview-content">
-      <div v-for="(question, index) in questions" :key="question.id"
+      <div v-for="(question, index) in questions" :key="question.name"
            :class="{ 'active': activeQuestion === index }"
            @click="() => { props.setActive(index); }"
       >
-        {{ question.name }} - {{ question.type }}
+        <div class="question-name">
+          {{ question.name }}
+        </div>
+         -
+        <div>
+          {{ question.type }}
+        </div>
       </div>
     </div>
   </div>
@@ -54,6 +60,12 @@ const props = defineProps({
 }
 
 .question-overview-content > * {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.question-overview-content > * {
   border: 1px solid white;
   border-radius: 4px;
   padding: 4px;
@@ -64,5 +76,12 @@ const props = defineProps({
 
 .question-overview-content .active {
   border-color: red !important;
+}
+
+.question-name {
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

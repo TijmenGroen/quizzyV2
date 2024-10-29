@@ -9,8 +9,7 @@ async function createQuiz() {
   if (!selectedDir.value) {
     await window.electronAPI.showMessageBox("Select folder first");
     return;
-  }
-  else if (!await window.electronAPI.exists(selectedDir.value)) {
+  } else if (!await window.electronAPI.exists(selectedDir.value)) {
     await window.electronAPI.showMessageBox("Folder not found");
     return;
   }
@@ -24,11 +23,10 @@ async function openDirectory() {
 
 async function writeDirectory() {
   await window.electronAPI.mkDir(selectedDir.value, title.value);
-  await window.electronAPI.writeFile(selectedDir.value + "/" + title.value, "data.json",
-      {
+  await window.electronAPI.writeFile(selectedDir.value + "/" + title.value, "data.json", JSON.stringify({
         "title": title.value,
         "questions": []
-      }
+      }, null, 2)
   );
 }
 
@@ -40,12 +38,12 @@ async function writeDirectory() {
     <input type='text' name='title' placeholder='Quizzy' v-model="title"/>
     <div style="width:100%; display: flex; flex-direction: column; justify-content: center; gap: 4px">
       <div style="width:100%; display: flex; justify-content: center; gap: 4px">
-      <button class="button" v-on:click="createQuiz">Create Quiz</button>
-      <button class="button" v-on:click="openDirectory">Select Folder</button>
+        <button class="button" v-on:click="createQuiz">Create Quiz</button>
+        <button class="button" v-on:click="openDirectory">Select Folder</button>
       </div>
-    <div style="color: white; display: flex; justify-content: center;">
-    Selected Directory: {{ selectedDir }}
-    </div>
+      <div style="color: white; display: flex; justify-content: center;">
+        Selected Directory: {{ selectedDir }}
+      </div>
     </div>
   </div>
 </template>
